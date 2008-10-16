@@ -7,10 +7,102 @@ module Babylon
 
   class UncertaintyError < StandardError; end;
 
-  VERSION = '0.1.0'
-  
+  VERSION = '0.1.1'
+
   SERVICE_URL = 'http://www.google.com/uds/GlangDetect'
   format :json
+
+  LANGUAGES = {
+    'af' => :afrikaans,
+    'sq' => :albanian,
+    'am' => :amharic,
+    'ar' => :arabic,
+    'hy' => :armenian,
+    'az' => :azerbaijani,
+    'eu' => :basque,
+    'be' => :belarusian,
+    'bn' => :bengali,
+    'bh' => :bihari,
+    'bg' => :bulgarian,
+    'my' => :burmese,
+    'ca' => :catalan,
+    'chr' => :cherokee,
+    'zh' => :chinese,
+    'zh-CN' => :chinese_simplified,
+    'zh-TW' => :chinese_traditional,
+    'hr' => :croatian,
+    'cs' => :czech,
+    'da' => :danish,
+    'dv' => :dhivehi,
+    'nl' => :dutch,
+    'en' => :english,
+    'eo' => :esperanto,
+    'et' => :estonian,
+    'tl' => :filipino,
+    'fi' => :finnish,
+    'fr' => :french,
+    'gl' => :galician,
+    'ka' => :georgian,
+    'de' => :german,
+    'el' => :greek,
+    'gn' => :guarani,
+    'gu' => :gujarati,
+    'iw' => :hebrew,
+    'hi' => :hindi,
+    'hu' => :hungarian,
+    'is' => :icelandic,
+    'id' => :indonesian,
+    'iu' => :inuktitut,
+    'it' => :italian,
+    'ja' => :japanese,
+    'kn' => :kannada,
+    'kk' => :kazakh,
+    'km' => :khmer,
+    'ko' => :korean,
+    'ku' => :kurdish,
+    'ky' => :kyrgyz,
+    'lo' => :laothian,
+    'lv' => :latvian,
+    'lt' => :lithuanian,
+    'mk' => :macedonian,
+    'ms' => :malay,
+    'ml' => :malayalam,
+    'mt' => :maltese,
+    'mr' => :marathi,
+    'mn' => :mongolian,
+    'ne' => :nepali,
+    'no' => :norwegian,
+    'or' => :oriya,
+    'ps' => :pashto,
+    'fa' => :persian,
+    'pl' => :polish,
+    'pt-PT' => :portuguese,
+    'pa' => :punjabi,
+    'ro' => :romanian,
+    'ru' => :russian,
+    'sa' => :sanskrit,
+    'sr' => :serbian,
+    'sd' => :sindhi,
+    'si' => :sinhalese,
+    'sk' => :slovak,
+    'sl' => :slovenian,
+    'es' => :spanish,
+    'sw' => :swahili,
+    'sv' => :swedish,
+    'tg' => :tajik,
+    'ta' => :tamil,
+    'tl' => :tagalog,
+    'te' => :telugu,
+    'th' => :thai,
+    'bo' => :tibetan,
+    'tr' => :turkish,
+    'uk' => :ukrainian,
+    'ur' => :urdu,
+    'uz' => :uzbek,
+    'ug' => :uighur,
+    'vi' => :vietnamese,
+    '' => :unknown
+  }
   
   #
   # Determines the language of a string
@@ -48,7 +140,7 @@ module Babylon
     reliable  = result['responseData']['isReliable']
     raise UncertaintyError if certainty < min_certainty || (ensure_reliability && !reliable)
 
-    result['responseData']['language'];
+    LANGUAGES[result['responseData']['language']];
   end
 
   # Method to get the raw result Google sends us.
